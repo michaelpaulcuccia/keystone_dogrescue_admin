@@ -12,14 +12,19 @@ const adapterConfig = {
   mongoUri: process.env.MONGO_URI
 };
 
+//Schema File
 const DogSchema = require('./lists/Dog');
 
 const keystone = new Keystone({
   adapter: new Adapter(adapterConfig),
   cookieSecret: process.env.COOKIE_SECRET,
   onConnect: process.env.CREATE_TABLES !== 'true' && initialiseData,
+  //needs to be added for successful deployment
+  //https://github.com/keystonejs/keystone/issues/2042
+  secureCookies: false,
 });
 
+//Routing
 keystone.createList('Dog', DogSchema);
 
 // Access control functions
@@ -74,7 +79,11 @@ keystone.createList('User', {
 const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
   list: 'User',
-  config: { protectIdentities: process.env.NODE_ENV === 'production' },
+  config: {
+    identityField: 'email',
+    secretField: 'password'
+  }
+  //config: { protectIdentities: process.env.NODE_ENV === 'production' },
 });
 
 module.exports = {
@@ -87,4 +96,9 @@ module.exports = {
       authStrategy,
     }),
   ],
+  //needs to be added for successful deployment
+  //https://github.com/keystonejs/keystone/issues/2042
+  configureExpress: app => {
+    app.set('trust proxy', 1)
+  }
 };

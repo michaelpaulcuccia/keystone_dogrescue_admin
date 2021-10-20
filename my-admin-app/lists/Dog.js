@@ -1,5 +1,5 @@
 const dotenv = require('dotenv').config();
-const { Text, Integer, Checkbox, File, Uuid } = require('@keystonejs/fields');
+const { Text, Integer, Checkbox, Select, DateTime} = require('@keystonejs/fields');
 const { CloudinaryAdapter } = require('@keystonejs/file-adapters');
 const { CloudinaryImage } = require('@keystonejs/fields-cloudinary-image');
 
@@ -18,18 +18,26 @@ const dogFields = {
         },
         breed: {
             type: Text,
-            isRequired: true
+            isRequired: true,
         },
-        ageMonths: {
-            type: Integer,
-            isRequired: true
+        birthDay: {
+            type: Text,
+            label: 'Age: MM/DD/YYYY. NOT REQUIRED'
         }, 
+        ageGuessMonths: {
+            type: Integer,
+            label: "If birthday is unknown, guess dog's age in months."
+        },
         weightPounds: {
             type: Integer,
             isRequired: true
         },
         sex: {
-            type: Text,
+            type: Select,
+            options: [
+                {value: 'male', label: 'Male'},
+                {value: 'female', label: 'Female'},
+            ],
             isRequired: true  
         },
         image: {
@@ -67,7 +75,7 @@ const dogFields = {
         successDog: {
             type: Checkbox
         },
-        note: {
+        notes: {
             type: Text,
             isMultiline: true
         }
