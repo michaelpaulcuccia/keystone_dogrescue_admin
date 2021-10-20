@@ -17,7 +17,7 @@ const DogSchema = require('./lists/Dog');
 
 const keystone = new Keystone({
   adapter: new Adapter(adapterConfig),
-  cookieSecret: process.env.COOKIE_SECRET,
+  cookieSecret: process.env.COOKIE_SECRET || 'chocolatechip',
   onConnect: process.env.CREATE_TABLES !== 'true' && initialiseData,
   //needs to be added for successful deployment
   //https://github.com/keystonejs/keystone/issues/2042

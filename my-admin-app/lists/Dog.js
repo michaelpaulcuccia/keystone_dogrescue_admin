@@ -1,5 +1,5 @@
 const dotenv = require('dotenv').config();
-const { Text, Integer, Checkbox, Select, DateTime} = require('@keystonejs/fields');
+const { Text, Integer, Checkbox, Select } = require('@keystonejs/fields');
 const { CloudinaryAdapter } = require('@keystonejs/file-adapters');
 const { CloudinaryImage } = require('@keystonejs/fields-cloudinary-image');
 
@@ -9,6 +9,8 @@ const fileAdapter = new CloudinaryAdapter({
     apiSecret: process.env.CLOUDINARY_SECRET,
     folder: 'my-keystone-app',
   });
+
+ //NOTE: For Heroku Deployment above items must be strings 
 
 const dogFields = {
     fields: {
