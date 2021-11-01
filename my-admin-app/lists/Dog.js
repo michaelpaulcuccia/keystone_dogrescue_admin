@@ -75,7 +75,8 @@ const dogFields = {
             type: Checkbox
         },
         successDog: {
-            type: Checkbox
+            type: Checkbox,
+            defaultValue: false
         },
         notes: {
             type: Text,
